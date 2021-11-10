@@ -8,7 +8,7 @@
 import UIKit
 
 class SecondViewController: UIViewController {
-    
+
     @IBOutlet weak var resultLabel: UILabel!
     
     override func viewDidLoad() {
