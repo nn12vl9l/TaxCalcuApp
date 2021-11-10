@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class FirstViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var cost:Double = 0

@@ -9,21 +9,21 @@ import UIKit
 
 class SecondViewController: UIViewController {
     
-    var resultArray:[Double] = []
-    var sum:Double = 0
-    
     @IBOutlet weak var resultLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultArray = UserDefaults.standard.object(forKey: "item") as! [Double]
-        print(resultArray)
-        sum = resultArray.reduce(0) { (num1:Double, num2:Double) -> Double in
-            return num1 + num2
-        }
+        resultLabel.text = ""
+        var sum = 0.0
         
-        resultLabel.text = String(format: "%.0f", sum)
+        let userDefaults = UserDefaults.standard
+        if userDefaults.object(forKey: "items") != nil {
+            let items = userDefaults.object(forKey: "item") as! [String]
+            for item in items {
+                sum = sum + Double(item)!
+            }
+            resultLabel.text = String(sum)
+        }
     }
-    
 }
