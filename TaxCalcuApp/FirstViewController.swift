@@ -7,7 +7,20 @@
 
 import UIKit
 
+
 class FirstViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+    
+    var cost:Double = 0
+    var addTaxCost:Double = 0
+    var costsArray:[Double] = []
+    var addTaxCostString:String = ""
+    
+    
+    @IBOutlet weak var showLabel: UILabel!
+    @IBOutlet weak var costField: UITextField!
+    @IBOutlet weak var taxController: UISegmentedControl!
+    @IBOutlet weak var itemTableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,17 +29,19 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         itemTableView.dataSource = self
         
         costsArray.removeAll()
+        
+        costField.addTarget(self, action: #selector(costFieldChange(sender:)), for: .editingChanged)
     }
     
-    var cost:Double = 0
-    var addTaxCost:Double = 0
-    var costsArray:[Double] = []
-    var addTaxCostString:String = ""
-    
-    @IBOutlet weak var showLabel: UILabel!
-    @IBOutlet weak var costField: UITextField!
-    @IBOutlet weak var taxController: UISegmentedControl!
-    @IBOutlet weak var itemTableView: UITableView!
+    @objc func costFieldChange(sender: UITextField) {
+        if taxController.selectedSegmentIndex == 0 {
+            calc(tax: 1.1)
+        } else {
+            calc(tax: 1.08)
+        }
+        
+        showLabel.text = addTaxCostString
+    }
     
     @IBAction func taxChanger(_ sender: Any) {
         if taxController.selectedSegmentIndex == 0 {
@@ -37,7 +52,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func calc(tax:Double) {
-        cost = Double(costField.text!)!
+        cost = Double(costField.text!) ?? 0.0
         addTaxCost = cost * Double(tax)
         print(addTaxCost)
         
@@ -46,14 +61,18 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     @IBAction func addButton(_ sender: Any) {
-        costsArray.append(contentsOf: [addTaxCost])
-        print(costsArray)
-        UserDefaults.standard.set(costsArray, forKey: "item")
-        
-        costField.text = ""
-        showLabel.text = ""
-        
-        self.itemTableView.reloadData()
+        if costField.text != "" {
+            costsArray.append(contentsOf: [addTaxCost])
+            print(costsArray)
+            UserDefaults.standard.set(costsArray, forKey: "item")
+            
+            costField.text = ""
+            showLabel.text = ""
+            
+            self.itemTableView.reloadData()
+        } else {
+            print("エラー")
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,5 +89,16 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         cell.textLabel?.text = "\(costsArray[indexPath.row])"
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            costsArray.remove(at: indexPath.row)
+            
+            UserDefaults.standard.set(costsArray, forKey: "item")
+            
+            itemTableView.reloadData()
+        }
     }
 }

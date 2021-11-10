@@ -115,10 +115,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="costField" destination="nW5-eF-VlL" id="hsc-PJ-g2l"/>
-                        <outlet property="itemTableView" destination="2Bh-Kj-gzv" id="VKp-pg-oUh"/>
-                        <outlet property="showLabel" destination="97p-Pa-IzG" id="i4Z-io-a5c"/>
-                        <outlet property="taxController" destination="m13-p3-h7Z" id="16H-7I-gRC"/>
+                        <outlet property="costField" destination="nW5-eF-VlL" id="thc-ke-hW3"/>
+                        <outlet property="itemTableView" destination="2Bh-Kj-gzv" id="3ce-SN-6s9"/>
+                        <outlet property="showLabel" destination="97p-Pa-IzG" id="bQd-kp-n8R"/>
+                        <outlet property="taxController" destination="m13-p3-h7Z" id="bhw-cz-yb6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZoQ-vB-4dR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
