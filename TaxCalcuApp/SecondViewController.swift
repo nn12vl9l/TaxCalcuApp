@@ -13,12 +13,16 @@ class SecondViewController: UIViewController {
     var resultArray:[Double] = []
     var sum:Double = 0
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         resultLabel.text = ""
-        resultArray = UserDefaults.standard.object(forKey: "item") as! [Double]
+        if UserDefaults.standard.object(forKey: "item") != nil {
+            resultArray = UserDefaults.standard.object(forKey: "item") as! [Double]
+        } else {
+            resultArray = [0.0]
+        }
+        
         print(resultArray)
         sum = resultArray.reduce(0) { (num1:Double, num2:Double) -> Double in
             return num1 + num2
